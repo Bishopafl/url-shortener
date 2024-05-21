@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('short_urls', function (Blueprint $table) {
             $table->id();
+            $table->string('long_url');
+            $table->string('short_code')->unique();
+            $table->unsignedBigInteger('visit_count')->default(0);
             $table->timestamps();
         });
     }
