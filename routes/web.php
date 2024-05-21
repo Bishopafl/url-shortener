@@ -26,6 +26,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/upload', function() {
+    return Inertia::render('FileUpload');
+})->name('upload');
+
 Route::post('/shorten', [UrlShortenerController::class, 'shorten'])->name('shorten');
 Route::get('/{code}', [RedirectController::class, 'redirect']);
 Route::get('/analytics/{code}', [AnalyticsController::class, 'show']);
