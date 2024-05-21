@@ -15,6 +15,7 @@ class RedirectController extends Controller
     {
         $short_url = ShortUrl::where('short_code', $code)->firstOrFail();
 
+        // dd('here', $short_url);
         // increment the visit count
         $short_url->incrementVisitCount();
 
