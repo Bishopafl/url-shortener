@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\UrlShortenerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ Route::get('/', function () {
 });
 
 Route::post('/shorten', [UrlShortenerController::class, 'shorten'])->name('shorten');
+Route::get('/{code}', [RedirectController::class, 'redirect']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
