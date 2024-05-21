@@ -11,7 +11,13 @@ const FileUpload = () => {
 
     const handleUpload = () => {
         if(file) {
-            console.log('file found');
+            Papa.parse(file, {
+                header: true,
+                complete: (results) => {
+                    const urls = results.data.map(row => row.long_url);
+                    Inertia.post('/upload', { urls });
+                },
+            });
         }
     };
 
