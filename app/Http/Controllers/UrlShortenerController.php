@@ -9,6 +9,18 @@ use Inertia\Inertia;
 
 class UrlShortenerController extends Controller
 {
+
+    /**
+     * Index method
+     * 
+     */
+    public function index()
+    {
+        $shortUrls = ShortUrl::all();
+        return response()->json($shortUrls);
+    }
+
+
     /**
      * URL Shortener method that receives a request from the front end
      * 
