@@ -18,6 +18,6 @@ class ShortUrl extends Model
      */
     public function incrementVisitCount()
     {
-        $this->increment('visits');
+        $this->increment('visit_count');
     }
 }
