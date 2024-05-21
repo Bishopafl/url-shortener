@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Papa from 'papaparse';
-import { Inertia } from '@inertiajs/react';
+import { Inertia } from '@inertiajs/inertia';
 
 const FileUpload = () => {
     const [file, setFile] = useState(null);
 
     const handleFileChange = (e) => {
-        console.log(e.target.files[0]);
+        setFile(e.target.files[0]);
     };
 
     const handleUpload = () => {
