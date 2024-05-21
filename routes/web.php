@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\UrlShortenerController;
@@ -27,6 +28,7 @@ Route::get('/', function () {
 
 Route::post('/shorten', [UrlShortenerController::class, 'shorten'])->name('shorten');
 Route::get('/{code}', [RedirectController::class, 'redirect']);
+Route::get('/analytics/{code}', [AnalyticsController::class, 'show']);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
