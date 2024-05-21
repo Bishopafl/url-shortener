@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Papa from 'papaparse';
 import { Inertia } from '@inertiajs/inertia';
 import axios from 'axios';
@@ -7,6 +7,20 @@ const FileUpload = () => {
     const [file, setFile] = useState(null);
     const [shortenedUrls, setShortenedUrls] = useState([]);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetchShortenedUrls();
+    });
+
+    const fetchShortenedUrls = async () => {
+        try {
+            const response = await axios.get('/api/short-urls');
+            console.log('resp',response);
+            setShortenedUrls(response.data);
+        } catch (err) {
+            console.error('Error fetching short URLs: ', err);
+        }
+    }
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
