@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ShortUrl;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 
 class UrlShortenerController extends Controller
 {
@@ -19,20 +21,40 @@ class UrlShortenerController extends Controller
         try {
             // Check if the URL is valid
             if ($urls) {
+                $shortenedUrls = [];
                 
                 foreach ($urls as $long_url) {
-                    // dd('url', $long_url, str()->random(6)); // this works
+                    // Generate a unique short code
+                    $short_code = str()->random(6);
+                    // if the short code exists, generate another one
+                    while (ShortUrl::where('short_code', $short_code)->exists()) {
+                        $short_code = str()->random(6);
+                    }
+                    // Create URL entry
                     ShortUrl::create([
                         'long_url' => $long_url,
                         'short_code' => str()->random(6),
                     ]);
+
+                    $shortenedUrls[] = [
+                        'long_url' => $long_url,
+                        'short_code' => $short_code,
+                    ];
                 }
 
-                return redirect()->route('welcome')->with('success', 'URLs Shortened Successfully.');
+                session(['shortenedUrls' => $shortenedUrls]);
 
+                return response()->json([
+                    'shortenedUrls' => $shortenedUrls,
+                ], 200);
+            } else {
+                // There are no URLs provided...
+                return response()->json([
+                    'error' => 'No URLs provided',
+                ], 400);
             }
         } catch (\Exception $e) {
-            return redirect()->route('welcome')->with('error', 'Error creating URL shortend request: '. $e->getMessage());
+            return response()->json(['error' => 'Error creating URL shortend request: '. $e->getMessage()] , 500);
         }
     }
 }
