@@ -15,7 +15,7 @@ const FileUpload = () => {
                 header: true,
                 complete: (results) => {
                     const urls = results.data.map(row => row.long_url);
-                    Inertia.post('/upload', { urls });
+                    Inertia.post('/shorten', { urls });
                 },
             });
         }
